@@ -1,0 +1,77 @@
+  .example-container mat-form-field+mat-form-field {
+      margin-left: 8px;
+  }
+
+  .example-container mat-form-field+mat-form-field {
+      margin-left: 8px;
+  }
+
+  .example-right-align {
+      text-align: right;
+  }
+
+  input.example-right-align::-webkit-outer-spin-button,
+  input.example-right-align::-webkit-inner-spin-button {
+      display: none;
+  }
+
+  .welcome-text{
+    font-size: 56px;
+    margin-left: 5rem;
+  }
+  input.example-right-align {
+      -moz-appearance: textfield;
+  }
+
+  .login-card {
+      max-width: 23rem;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: -4px 6px #001b038f;
+  }
+
+  .login-form-field {
+      width: 100%;
+      margin-top: 1rem;
+
+  }
+  .login-card .logo{
+    max-height: 3.5rem;
+  }
+  .login-btn {
+      width: 100%;
+      height: 3rem;
+      margin-top: 1rem;
+      font-size: 21px;
+      background-color: #b71d1c !important;
+      color: white !important;
+      margin-bottom: 1rem;
+  }
+
+  .login-action-link{
+    margin-top : 1rem;
+  }
+  .login-form-title {
+      font-size: 15px;
+      margin-top: 1rem;
+  }
+
+  //to set the background colors of email and password   
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      background-color: white;
+  }
+
+
+
+  .bg-glass {
+    background-color: hsla(0, 0%, 100%, 0.9) !important;
+    backdrop-filter: saturate(200%) blur(25px);
+  }
+
+  .divider:after,
+  .divider:before {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #eee;
+  }
