@@ -48,6 +48,12 @@
       margin-bottom: 1rem;
   }
 
+  .disabled
+  {
+    opacity: 0.7;
+    cursor: not-allowed !important;
+    pointer-events: all !important;
+  }
   .login-action-link{
     margin-top : 1rem;
   }
