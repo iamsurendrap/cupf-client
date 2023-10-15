@@ -1,6 +1,13 @@
-<mat-toolbar color="transperent" class="custom-toolbar p-md-5">
+<mat-toolbar *ngIf="!isLoggedIn" color="transperent" class="custom-toolbar p-md-5">
    <img class="clark-logo" src="../assets/images/clark-og-logo.svg">
    <!-- //<img class="logo" src="../assets/images/cupf-logo-white-text.png" /> -->
    <span class="example-spacer"></span>
    <!-- <img class="clark-logo" src="../assets/images/clark-og-logo.svg"> -->
+</mat-toolbar>
+
+<mat-toolbar *ngIf="isLoggedIn" color="transperent" class="app-header  p-md-5">
+   
+   <img class="logo" src="../assets/images/cupf-logo-white-text.png" />
+   <span class="example-spacer"></span>
+   <a routerLink="/login" (click)="logout()">logout</a>
 </mat-toolbar>
