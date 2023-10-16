@@ -5,9 +5,26 @@
    <!-- <img class="clark-logo" src="../assets/images/clark-og-logo.svg"> -->
 </mat-toolbar>
 
-<mat-toolbar *ngIf="isLoggedIn" color="transperent" class="app-header  p-md-5">
+<mat-toolbar *ngIf="isLoggedIn" class="app-header px-md-5">
    
    <img class="logo" src="../assets/images/cupf-logo-white-text.png" />
    <span class="example-spacer"></span>
-   <a routerLink="/login" (click)="logout()">logout</a>
+   <button mat-button class="user-name" [matMenuTriggerFor]="menu" aria-label="username">
+      <mat-icon>person</mat-icon>
+      <span> {{currentUser.firstName +" " + currentUser.lastName}}</span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item disabled="">
+         <mat-icon>person</mat-icon>
+         <span routerLink="/login" (click)="logout()">Profile</span>
+       </button>
+
+      <button routerLink="/login" (click)="logout()" mat-menu-item>
+         <mat-icon>logout</mat-icon>
+         <span>Logout</span>
+       </button>
+     
+    </mat-menu>
+    
+  
 </mat-toolbar>

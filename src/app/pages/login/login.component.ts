@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit{
     .subscribe({
       next:(res)=>{
         this.hiddenError=true;
-        localStorage.setItem('user_id',res.data._id);
+        this.authService.setCurrentUser(res.data, res.data._id);
         this.authService.isLoggedIn$.next(true);
         this.loginForm.reset();
         this.router.navigate(['home']);

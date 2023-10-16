@@ -6,13 +6,17 @@
     background-color: transparent;
   }
   .app-header{
-    height: 80px ;
-    background-color: rgb(240,0,0);
+    height: 75px ;
+    background-color: rgb(204 1 0);
   }
   .logo{
     max-height: 4rem;
   }
 
+  .user-name{
+    color:white !important;
+    font-size: 16px;
+  }
   .clark-logo
   {
     max-width: 4rem;
