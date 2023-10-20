@@ -1,17 +1,16 @@
 <!-- Section: Design Block -->
-<section class="background-radial-gradient overflow-hidden">
+<section class="background-cu-web-image">
 
     <style>
-        .background-radial-gradient {
+        .background-cu-web-image {
             background-color: hsl(218, 41%, 15%);
             background-image: url("../assets/images/cu-bg.jpg");
             background-size: cover;
             height: 100%;
+            overflow-x: hidden;
         }
     </style>
-
-
-    <div class=" px-4 py-5 px-md-5 text-center text-lg-start my-5">
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start my-5">
         <div class="row gx-lg-5 align-items-center mb-5 mt-5">
             <div class="col-lg-7 mb-5 mb-lg-0 d-none d-lg-block" style="z-index: 10">
                 <h1 class="display-5 welcome-text fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
@@ -37,33 +36,38 @@
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
-                        <form>
+                        <form [formGroup]="loginForm">
                             <mat-form-field class="login-form-field" appearance="outline">
                                 <mat-label>Email</mat-label>
-                                <input type="email" matInput [formControl]="emailFormControl"
+                                <input type="email" matInput formControlName="email"
                                     placeholder="Ex. pat@example.com">
                                 <mat-error
-                                    *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                                    *ngIf="loginForm.hasError('email','email')">
                                     Please enter a valid email address
                                 </mat-error>
-                                <mat-error *ngIf="emailFormControl.hasError('required')">
+                                <mat-error *ngIf="loginForm.hasError('required','email')">
                                     Email is <strong>required</strong>
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field class="login-form-field" appearance="outline">
                                 <mat-label>Enter your password</mat-label>
-                                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
+                                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
                                 <button mat-icon-button matSuffix (click)="hide = !hide"
                                     [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
-                                <mat-error *ngIf="emailFormControl.hasError('required')">
+                                <mat-error *ngIf="loginForm.hasError('required','password')">
                                     Password is <strong>required</strong>
                                 </mat-error>
+                                
                             </mat-form-field>
-                            <button mat-raised-button class="login-btn">Login</button>
-                            <a class="login-action-link text-muted" href="#!">Forgot password?</a>
-                            <p class="login-action-link " style="color: #393f81;">Don't have an account? <a href="#!"
+                            <mat-error *ngIf="!hiddenError">
+                                The user name or password is incorrect
+                            </mat-error>
+                            <button [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()" mat-raised-button class="login-btn">Login</button>
+                            
+                            <a class="login-action-link text-muted" routerLink="/repair">Forgot password?</a>
+                            <p class="login-action-link " style="color: #393f81;">Don't have an account? <a routerLink="/repair"
                                     style="color: #393f81;">Register here</a></p>
                         </form>
                     </mat-card-content>

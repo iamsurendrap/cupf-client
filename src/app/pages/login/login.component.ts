@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
-import {Component} from '@angular/core';
-import {FormControl, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Component, OnInit, inject} from '@angular/core';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Router, RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 /** @title Form field with error messages */
 @Component({
@@ -21,20 +24,43 @@ import {MatCardModule} from '@angular/material/card';
      NgIf,
      MatIconModule,
      MatButtonModule,
-     MatCardModule],
+     MatCardModule,
+    RouterModule],
 })
-export class LoginComponent {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+export class LoginComponent implements OnInit{
 
-  passwordFormControl = new FormControl('',[Validators.required])
+  fb = inject(FormBuilder);
+  authService = inject(AuthenticationService);
+  cookie = inject(CookieService);
+  router = inject(Router);
+
+  loginForm !:FormGroup;
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email : ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['',Validators.required]
+    });
+
+    localStorage.removeItem('user_id');
+    this.authService.isLoggedIn$.next(false);
+  }
 
   hide = true;
+  hiddenError = true;
 
-  getErrorMessage() {
-    if (this.emailFormControl.hasError('required') || this.passwordFormControl.hasError('reuired')) {
-      return 'You must enter a value';
-    }
-
-    return this.emailFormControl.hasError('email') ? 'Not a valid email' : '';
+  login(){
+    this.authService.loginService(this.loginForm.value)
+    .subscribe({
+      next:(res)=>{
+        this.hiddenError=true;
+        this.authService.setCurrentUser(res.data, res.data._id);
+        this.authService.isLoggedIn$.next(true);
+        this.loginForm.reset();
+        this.router.navigate(['home']);
+      },
+      error:(err)=>{ 
+        this.hiddenError=false;
+      }
+    })
   }
 }
