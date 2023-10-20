@@ -1,0 +1,116 @@
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5rem;
+    font-size: 20px;
+    z-index: 1;
+    background:white;
+}
+.filter-div{
+  margin:0px 10px 0px 0px;
+}
+.course-container-card{
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.ground-card{
+    max-width: 250px;
+    border: 0px;
+    padding: 0px;
+    //box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.ground-card-content{
+  padding: 0px;
+}
+
+.ground-card-content:first-child{
+  padding-top: 0px;
+}
+
+.ground-card-actions{
+  top: 2rem;
+    position: relative;
+}
+
+.image-container {
+    max-width: 250px; /* Set the desired width of the cropped image */
+    height: 175px; /* Set the desired height of the cropped image */
+    overflow: hidden;
+    border-radius: 6px;
+  }
+  
+.cropped-image {
+    width:  250px; /* Make sure the image covers the entire container */
+    height: 200px; /* Make sure the image covers the entire container */
+    object-fit: cover; /* Crop the image to cover the container */
+    object-position: center center; /* Center the image within the container */
+    transform: scale(2);
+  }
+
+  .ground-card-img-overlay{
+    top:unset;
+    height: 90px;
+    // background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%,rgba(0,0,0,0) 100%);
+    //background:#00000042;
+    background-image: linear-gradient(to top, rgb(0 0 0 / 90%) 35%, rgba(255, 255, 255, 0) 95%);
+    line-height: 1.4rem;
+    //padding: 10px 1rem 6rem 10px;
+    position: sticky;
+    // border-radius: 10px 10px 7px 7px;
+  }
+
+  .ground-card-body{
+    padding: 17px 8px 9px 12px;
+  }
+
+  .ground-card-img-overlay p{
+    bottom: -5px;
+    position: absolute;
+    font-weight: normal;
+    color:white;
+    font-size: 15px;
+  }
+  .sport-badge{
+    border-radius: 5px;
+    padding: 0.5rem;
+    background-color: #cc0100;
+    color: white;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+
+  }
+  .location div{
+    position: relative;
+    top:-2px;  
+  }
+  .ground-card-details{
+    height: 110px;
+  }
+
+  .sports-container, .sports-filter-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 6px; 
+    //padding: .5rem .5rem .5rem .5rem;
+  }
+  .location{
+    display: flex; 
+    align-items: center;
+    position: absolute;
+    bottom: 6px;
+  }
+  .location .mat-icon{
+    font-size: 18px;
+  }
+
+  .filter-button{
+    background-color: white;
+    color:black;
+  }
+  .filter-button.btn-primary {
+    background-color: rgb(204 1 0);
+    color: #fff;
+  }
+
+
+  
