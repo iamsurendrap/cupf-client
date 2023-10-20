@@ -12,6 +12,12 @@ export class AuthenticationService {
 
   private currentUser: any; // Store user information here
 
+  //Services section
+  loginService(loginObj:any){
+    return this.http.post<any>(`${apiUrls.authenticationServiceUrl}login`,loginObj,{ withCredentials: true });
+  }
+  
+//Helper methods
   setCurrentUser(user: any, userid: any) {
     // Store the user information in currentUser
     this.currentUser = user;
@@ -20,7 +26,6 @@ export class AuthenticationService {
   }
 
   resetCurrentUser() {
-    // Clear the user information
     this.currentUser = null;
     localStorage.removeItem("user")
   }
@@ -28,10 +33,6 @@ export class AuthenticationService {
   getCurrentUser() {
     this.currentUser = localStorage.getItem("user");
     return this.currentUser;
-  }
-
-  loginService(loginObj:any){
-    return this.http.post<any>(`${apiUrls.authenticationServiceUrl}login`,loginObj,{ withCredentials: true });
   }
 
   isLoggedIn(){
