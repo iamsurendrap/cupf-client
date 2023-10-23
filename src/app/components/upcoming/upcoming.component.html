@@ -2,27 +2,34 @@
     <div class="upcoming-container-header mat-mdc-card-header">
         <h2>Upcoming</h2>
     </div>
-    <div class="upcoming-container-content mat-mdc-card-content">
+    <div class="upcoming-container-content mat-mdc-card-content mb-3" *ngFor="let match of scheduled.matches">
         <mat-card>
-            <mat-card-content>
-                <div class="row">
+                <div class="row p-3 mx-0 content-1">
                     <div class="col-sm-8">
-                        <div>
-                            <h3>Cricket</h3>
+                        <div class="upcoming-sport">
+                            {{match.sport}}
                         </div>
-                        <div>
-                            
+                        <div class="upcoming-match-time">
+                            {{match.date | date:'MM-dd-yyyy HH:mm a'}}
                         </div>
                     </div>
-                    <div class="col-sm-2">
-                        Polepalli
+                    <div class="col-sm-4 text-center">
+                        <div class="upcoming-sport">
+                            {{10}}
+                        </div>
+                        <div>
+                            going
+                        </div>
                     </div>
                 </div>
-             
-            </mat-card-content>
-            <mat-card-content>polepalli </mat-card-content>
-           </mat-card>
-        
+                <div class="info-row p-3">
+                    <div class="location">
+                        <mat-icon aria-hidden="false" aria-label="location" fontIcon="pin_drop"></mat-icon>
+                        <div class="location-name">{{match.ground.name}}</div>
+                    </div>
+                </div>
+        </mat-card>
+
     </div>
 
 </div>
