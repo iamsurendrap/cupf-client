@@ -4,7 +4,7 @@
     </div>
     <div class="ground-container-content mat-mdc-card-content">
         <div class="w-100 sticky mb-4" bis_skin_checked="1">
-            <div class="sports-filter-container">
+            <div class="sports-filter-container" data-aos="fade-up" data-aos-delay="100">
                 <button mat-raised-button class="filter-button" *ngFor="let sport of sports; let i = index"
                 [class.btn-primary]="selectedSports.includes(sport)"
                 (click)="toggleSportSelection(sport); moveButton(i)"
@@ -16,8 +16,8 @@
 
         </div>
         <ng-container>
-            <div class="row g-3">
-                <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let court of filteredItems">
+            <div class="row g-3 ground-cards-container" >
+                <div class="col-lg-3 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="100" *ngFor="let court of filteredItems">
                     <mat-card class="ground-card">
                         <mat-card-content class="ground-card-content">
                             <div class="bg-image hover-overlay image-container">
