@@ -16,8 +16,11 @@ export class AuthenticationService {
   loginService(loginObj:any){
     return this.http.post<any>(`${apiUrls.authenticationServiceUrl}login`,loginObj,{ withCredentials: true });
   }
+  forgotService(forgotObj:any){
+    return this.http.post<any>(`${apiUrls.authenticationServiceUrl}forget`,forgotObj,{ withCredentials: true });
+  }
   
-//Helper methods
+//Helper methodss
   setCurrentUser(user: any, userid: any) {
     // Store the user information in currentUser
     this.currentUser = user;

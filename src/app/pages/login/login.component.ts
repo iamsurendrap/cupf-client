@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit{
         this.authService.setCurrentUser(res.data, res.data._id);
         this.authService.isLoggedIn$.next(true);
         this.loginForm.reset();
-        this.router.navigate(['home']);
+        this.router.navigate(['forgotpassword']);
       },
       error:(err)=>{ 
         this.hiddenError=false;
