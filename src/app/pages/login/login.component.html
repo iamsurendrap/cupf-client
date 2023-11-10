@@ -11,7 +11,7 @@
         }
     </style>
     <div id="designBlockContent" class="px-4 py-5 px-md-5 text-center text-lg-start my-5">
-        <div class="row gx-lg-5 align-items-center mb-5 mt-5">
+        <div id="designBlockContent2" class="row gx-lg-5 align-items-center mb-5 mt-5">
             <div id="textBlock" class="col-lg-7 mb-5 mb-lg-0 d-none d-lg-block" style="z-index: 10">
                 <h1 id="welcomeHeading" class="display-5 welcome-text fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
                     Welcome! <br />
@@ -27,41 +27,41 @@
                     <mat-card-header id="cardHeader">
 
                         <mat-card-title id="cardTitle">
-                            <img class="logo" src="../assets/images/cupf-logo-red-text.png" />
+                            <img id="cupf-logo-red-text" class="logo" src="../assets/images/cupf-logo-red-text.png" />
                             <br />
                             <div id="loginFormTitle" class="login-form-title">
 
-                                <span class="text-muted">Sign in to your account</span>
+                                <span id="sign-in" class="text-muted">Sign in to your account</span>
                             </div>
                         </mat-card-title>
                     </mat-card-header>
                     <mat-card-content id="cardContent">
-                        <form [formGroup]="loginForm">
-                            <mat-form-field class="login-form-field" appearance="outline">
-                                <mat-label for="emailInput">Email</mat-label>
+                        <form id="login-form" [formGroup]="loginForm">
+                            <mat-form-field id="login-form-field" class="login-form-field" appearance="outline">
+                                <mat-label id="email" for="emailInput">Email</mat-label>
                                 <input id="emailInput" type="email" matInput formControlName="email"
                                     placeholder="Ex. pat@example.com">
-                                <mat-error
+                                <mat-error id="email-error"
                                     *ngIf="loginForm.hasError('email','email')">
                                     Please enter a valid email address
                                 </mat-error>
-                                <mat-error *ngIf="loginForm.hasError('required','email')">
+                                <mat-error id="email-error-2" *ngIf="loginForm.hasError('required','email')">
                                     Email is <strong>required</strong>
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field class="login-form-field" appearance="outline">
-                                <mat-label for="passwordInput">Enter your password</mat-label>
+                            <mat-form-field id="login-form-field" class="login-form-field" appearance="outline">
+                                <mat-label id="password_label" for="passwordInput">Enter your password</mat-label>
                                 <input id="passwordInput" matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                                <button mat-icon-button matSuffix (click)="hide = !hide"
+                                <button id="password-hide" mat-icon-button matSuffix (click)="hide = !hide"
                                     [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
-                                <mat-error *ngIf="loginForm.hasError('required','password')">
+                                <mat-error id="password-required" *ngIf="loginForm.hasError('required','password')">
                                     Password is <strong>required</strong>
                                 </mat-error>
                                 
                             </mat-form-field>
-                            <mat-error *ngIf="!hiddenError">
+                            <mat-error id="password-error" *ngIf="!hiddenError">
                                 The user name or password is incorrect
                             </mat-error>
                             <button id="loginButton" [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()" mat-raised-button class="login-btn">Login</button>
