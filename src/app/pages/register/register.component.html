@@ -1,1 +1,129 @@
-<p>register works!</p>
+<style>
+    
+    
+</style>
+<div class="row home-container">
+    <div class="col-md-3  d-md-block d-none"></div>
+    <div class="col-md-6 col-sm-12">
+        <div class="card">
+            <p>
+                <mat-toolbar>
+                <span>Registration Form</span>
+                </mat-toolbar>
+            </p>
+            
+            <div class="card-body">
+            <form [formGroup]="registrationForm" (ngSubmit)="registration()" >
+                <div class="mb-3">
+                <mat-card-content>
+                    <p> 
+                        <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First Name" >
+                        <mat-icon matSuffix>person</mat-icon>
+                        <mat-hint></mat-hint>
+                        <mat-error
+                                    *ngIf="registrationForm.hasError('firstName','firstName')">
+                                    Please enter a valid First Name
+                                </mat-error>
+                                <mat-error *ngIf="registrationForm.hasError('required','firstName')">
+                                    First Name is <strong>required</strong>
+                                </mat-error>
+                        </mat-form-field>
+                   
+                        <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last Name">
+                        <mat-icon matSuffix>person</mat-icon>
+                        <mat-hint></mat-hint>
+                        <mat-error
+                                    *ngIf="registrationForm.hasError('lastName','lastName')">
+                                    Please enter a valid Last Name
+                                </mat-error>
+                                <mat-error *ngIf="registrationForm.hasError('required','lastName')">
+                                    Last Name is <strong>required</strong>
+                                </mat-error>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <mat-form-field appearance="outline">
+                        <mat-label>Clark ID</mat-label>
+                        <input matInput placeholder="Clark ID">
+                        <mat-icon matSuffix>school</mat-icon>
+                        <mat-hint></mat-hint>
+                        </mat-form-field>
+                
+                        <mat-form-field appearance="outline">
+                        <mat-label>Clark mail</mat-label>
+                        <input matInput placeholder="E-mail">
+                        <mat-icon matSuffix>mail</mat-icon>
+                        <mat-hint></mat-hint>
+                        </mat-form-field>
+                    </p>          
+                    <p>
+                        <mat-form-field class="login-form-field" appearance="outline">
+                            <mat-label>Enter your password</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide"
+                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="registrationForm.hasError('required','password')">
+                                Password is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="login-form-field" appearance="outline">
+                        <mat-label>Renter your password</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                        <button mat-icon-button matSuffix (click)="hide = !hide"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="registrationForm.hasError('required','password')">
+                            Password is <strong>not matching</strong>
+                        </mat-error>
+                        </mat-form-field>
+                    </p>
+                    </mat-card-content>
+                    <div class="mb-3">
+                    <mat-form-field class="example-chip-list">
+                        <mat-label>Favorite Sports</mat-label>
+                        <mat-icon matSuffix>directions_run</mat-icon>
+                        <mat-chip-grid #chipGrid aria-label="Sport selection">
+                          <mat-chip-row *ngFor="let sport of sports" (removed)="remove(sport)">
+                            {{sport}}
+                            <button matChipRemove [attr.aria-label]="'remove ' + sport">
+                            <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip-row>
+                        </mat-chip-grid>
+                        <input placeholder="New Sport..." #sportInput [formControl]="sportCtrl"
+                        [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="add($event)"/>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                          <mat-option *ngFor="let sport of filteredSports | async" [value]="sport">
+                            {{sport}}
+                        </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    </div>
+                    <button mat-raised-button (click)="openDialog('3000ms', '1500ms')" [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid" (click)="registration()" mat-raised-button class="register-btn">Register</button>
+                   <!--<button [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid" (click)="registration()" mat-raised-button class="register-btn">Register</button>--> 
+                    </div>
+                </form>
+            </div>
+        
+            <!-- Modal for the success message -->
+            <div *ngIf="showSuccessPopup" class="popup">
+                <div class="popup-content">
+                <p>Registration successful!</p>
+                <button [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid" (click)="redirectToregisterPage()" mat-raised-button class="register-btn">Go to register</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 d-md-block d-none"></div>
+</div>
+
