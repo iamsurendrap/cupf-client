@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ForgotpasswordComponent } from './pages/forgotpassword/forgotpassword.component';
 import { UnderconstructionComponent } from './pages/underconstruction/underconstruction.component';
 import { authGuard } from './auth.guard';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
     {path: '', redirectTo :'login',pathMatch:'full'},
@@ -13,5 +14,6 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path:'home', component: HomeComponent, canActivate:[authGuard]},
     {path:'forgotpassword',component: ForgotpasswordComponent},
-    {path:'repair', component: UnderconstructionComponent}
+    {path:'repair', component: UnderconstructionComponent},
+    {path:'UserProfile', component: UserProfileComponent}
 ];
