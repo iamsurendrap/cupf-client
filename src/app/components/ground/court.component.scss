@@ -42,6 +42,13 @@ div.sticky {
     overflow: hidden;
     border-radius: 6px;
   }
+
+  .selected-court .image-container {
+    max-width: 350px; /* Set the desired width of the cropped image */
+    height: 175px; /* Set the desired height of the cropped image */
+    overflow: unset;
+    border-radius: 6px;
+  }
   
 .cropped-image {
     width:  250px; /* Make sure the image covers the entire container */
@@ -77,15 +84,15 @@ div.sticky {
   .sport-badge{
     border-radius: 5px;
     padding: 0.5rem;
-    background-color: #cc0100;
+    background-color: rgb(44 44 44);
     color: white;
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 
   }
-  .location div{
-    position: relative;
-    top:-2px;  
-  }
+  // .location div{
+  //   position: relative;
+  //   top:-2px;  
+  // }
   .ground-card-details{
     height: 110px;
   }
@@ -96,22 +103,96 @@ div.sticky {
     gap: 6px; 
     //padding: .5rem .5rem .5rem .5rem;
   }
-  .location{
-    display: flex; 
-    align-items: center;
+  .schedule-action{
     position: absolute;
-    bottom: 6px;
+    bottom: 5px;
+    width: 100%;
+    height: 50px;
+    text-align: center;
   }
-  .location .mat-icon{
-    font-size: 18px;
-    color: #cc0100;
-  }
+  // .location .mat-icon{
+  //   font-size: 18px;
+  //   color: rgb(44 44 44);
+  // }
 
   .filter-button{
     background-color: white;
     color:black;
   }
   .filter-button.btn-primary {
-    background-color: rgb(204 1 0);
+    background-color: rgb(44 44 44);
     color: #fff;
   }
+
+  .sports-name{
+    color:#cc0100
+  }
+
+ .submit-btn {
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    background-color: #cc0100;
+    border-color:#cc0100;
+    padding: 8px 20px 10px 20px;
+    border-radius: 7px;
+    height: 3rem;
+    color: white;
+    width: 95%;
+  }
+  
+.submit-btn:hover {
+
+    background-color: red;
+    border-color: red;
+    
+  }
+
+.submit-btn i {
+    font-size: 14px;
+    margin-left: 5px;
+    line-height: 0;
+    transition: 0.3s;
+}
+
+.submit-btn i {
+    font-size: 18px;
+    margin-left: 5px;
+    line-height: 0;
+    transition: 0.3s;
+}
+.submit-btn:hover i {
+    margin-left: 10px;
+}
+
+.schedule-form-field {
+  width: 100%;
+  margin-top: 1rem;
+
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
+}
+
+.schedule-match-form .sports-select-container{
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 6px; 
+}
+
+.mat-mdc-dialog-title{
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  color: grey !important;
+}
+
+.schedule-match-form .court-name{
+  color:black;
+  font-size: 22px;
+  font-weight: 400;
+  color:red;
+}
+
+.sports-select-container  .mat-mdc-raised-button[disabled][disabled]{
+  background: #d8d8d8;
+    cursor: wait;
+}

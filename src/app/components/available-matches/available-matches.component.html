@@ -1,11 +1,11 @@
 <div class="upcoming-container-card" >
     <div class="upcoming-container-header mat-mdc-card-header">
-        <h2>Your Upcoming Matches ({{scheduled.length}})</h2>
+        <h2>Available to Join</h2>
     </div>
     <div class="upcoming-container-content vh-100">
-        <div class="mat-mdc-card-content mb-3" *ngFor="let match of scheduled">
+        <div class="mat-mdc-card-content mb-3" *ngFor="let match of availableMatches">
             <mat-card>
-                    <div class="row px-2 py-3 mx-0 content-1">
+                    <div class="row p-3 mx-0 content-1">
                         <div class="col-sm-8">
                             <div class="upcoming-sport">
                                 {{match.sport}}
@@ -28,26 +28,29 @@
                             <mat-icon aria-hidden="false" aria-label="location" fontIcon="pin_drop"></mat-icon>
                             <div class="location-name">{{match.ground.name}}</div>
                         </div>
-                       
                     </div>
-                    <div class="info-row p-3">
-                        <div class="drop-match">
-                          <a class="drop-match-link" [class.disabled]="match.isOwner" (click)="openDropMatchDialog(match)">Drop Match</a>
+                     <div class="info-row p-3">
+                        <div class="join-match">
+                          <a class="join-match-link" [class.disabled]="match.isOwner" (click)="openJoinMatchDialog(match)">Join Match</a>
                         </div>
                       </div>
             </mat-card>
+    
         </div>
     </div>
 
-    <ng-template #dropMatchDialog let-data>
+
+    <ng-template #joinMatchDialog let-data>
         <label mat-dialog-title>Confirm</label>
         <mat-dialog-content>
-            <label>Are you sure you want to drop the match?</label>
+            <label>Are you sure you want to join the match?</label>
         </mat-dialog-content>
         <mat-dialog-actions align="end"> 
             <button mat-button [mat-dialog-close]="false">No</button>
-            <button mat-button color="warn" [mat-dialog-close]="true">Yes</button>
+            <button mat-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
           </mat-dialog-actions>
 
       </ng-template>
+   
+
 </div>
