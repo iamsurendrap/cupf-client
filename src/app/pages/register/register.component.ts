@@ -1,35 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import {NgIf} from '@angular/common';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import { FormControl, Validators, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router, RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {ElementRef, ViewChild, inject} from '@angular/core';
-import {MatAutocompleteSelectedEvent, MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {NgFor, AsyncPipe} from '@angular/common';
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatDialog, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ElementRef, ViewChild, inject } from '@angular/core';
+import { MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 
 @Component({
   selector: 'RegisterComponent',
   standalone: true,
   imports: [MatFormFieldModule,
-    MatInputModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgIf,
     MatIconModule,
     MatButtonModule,
@@ -122,27 +122,35 @@ export class RegisterComponent {
   cookie = inject(CookieService);
   router = inject(Router);
 
-  registrationForm !:FormGroup;
+  registrationForm !: FormGroup;
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      email : ['', Validators.compose([Validators.required, Validators.email])],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
       //password: ['',Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', Validators.compose([Validators.required, this.noNumbersOrSpecialChars])],
+      lastName: ['', Validators.compose([Validators.required, this.noNumbersOrSpecialChars])],
       clarkid: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     },
-    { validators: this.passwordMatchValidator }
+      { validators: this.passwordMatchValidator }
     );
-    
-    localStorage.removeItem('user_id');
-    this.authService.isLoggedIn$.next(false);
+
+    // localStorage.removeItem('user_id');
+    // this.authService.isLoggedIn$.next(false);
+  }
+
+  noNumbersOrSpecialChars(control: AbstractControl): { [key: string]: boolean } | null {
+    const pattern = /^[a-zA-Z]+$/; // Regular expression to allow only letters
+    if (!pattern.test(control.value)) {
+      return { 'noNumbersOrSpecialChars': true };
+    }
+    return null;
   }
 
   hide = true;
   hiddenError = true;
 
-  registration(){
+  registration() {
     if (this.registrationForm.valid) {
       // Assuming you want to collect the form data and display it in the console
       const formData = this.registrationForm.value;
@@ -150,7 +158,7 @@ export class RegisterComponent {
 
       // You can send the form data to your backend server for further processing and registration.
       // Make an HTTP POST request to your registration endpoint here.
-      
+
       // Reset the form
       this.registrationForm.reset();
 
@@ -161,7 +169,7 @@ export class RegisterComponent {
 
   showSuccessPopup: boolean = false;
 
-//constructor(private router: Router) {}
+  //constructor(private router: Router) {}
 
   registerUser() {
     // Handle registration logic here (e.g., make an API call).
@@ -174,7 +182,7 @@ export class RegisterComponent {
     this.router.navigate(['/register']);
   }
 
-  
+
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(DialogAnimationsExampleDialog, {
@@ -187,5 +195,5 @@ export class RegisterComponent {
 }
 
 export class DialogAnimationsExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
+  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) { }
 }

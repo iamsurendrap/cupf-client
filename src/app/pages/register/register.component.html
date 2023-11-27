@@ -1,129 +1,142 @@
-<style>
-    
-    
-</style>
-<div class="row home-container">
-    <div class="col-md-3  d-md-block d-none"></div>
-    <div class="col-md-6 col-sm-12">
-        <div class="card">
-            <p>
-                <mat-toolbar>
-                <span>Registration Form</span>
-                </mat-toolbar>
-            </p>
-            
-            <div class="card-body">
-            <form [formGroup]="registrationForm" (ngSubmit)="registration()" >
-                <div class="mb-3">
-                <mat-card-content>
-                    <p> 
-                        <mat-form-field appearance="outline">
-                        <mat-label>First Name</mat-label>
-                        <input matInput placeholder="First Name" >
-                        <mat-icon matSuffix>person</mat-icon>
-                        <mat-hint></mat-hint>
-                        <mat-error
-                                    *ngIf="registrationForm.hasError('firstName','firstName')">
-                                    Please enter a valid First Name
-                                </mat-error>
-                                <mat-error *ngIf="registrationForm.hasError('required','firstName')">
-                                    First Name is <strong>required</strong>
-                                </mat-error>
-                        </mat-form-field>
-                   
-                        <mat-form-field appearance="outline">
-                        <mat-label>Last Name</mat-label>
-                        <input matInput placeholder="Last Name">
-                        <mat-icon matSuffix>person</mat-icon>
-                        <mat-hint></mat-hint>
-                        <mat-error
-                                    *ngIf="registrationForm.hasError('lastName','lastName')">
-                                    Please enter a valid Last Name
-                                </mat-error>
-                                <mat-error *ngIf="registrationForm.hasError('required','lastName')">
-                                    Last Name is <strong>required</strong>
-                                </mat-error>
-                        </mat-form-field>
-                    </p>
-                    <p>
-                        <mat-form-field appearance="outline">
-                        <mat-label>Clark ID</mat-label>
-                        <input matInput placeholder="Clark ID">
-                        <mat-icon matSuffix>school</mat-icon>
-                        <mat-hint></mat-hint>
-                        </mat-form-field>
-                
-                        <mat-form-field appearance="outline">
-                        <mat-label>Clark mail</mat-label>
-                        <input matInput placeholder="E-mail">
-                        <mat-icon matSuffix>mail</mat-icon>
-                        <mat-hint></mat-hint>
-                        </mat-form-field>
-                    </p>          
-                    <p>
-                        <mat-form-field class="login-form-field" appearance="outline">
-                            <mat-label>Enter your password</mat-label>
-                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                            <button mat-icon-button matSuffix (click)="hide = !hide"
-                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                            </button>
-                            <mat-error *ngIf="registrationForm.hasError('required','password')">
-                                Password is <strong>required</strong>
-                            </mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="login-form-field" appearance="outline">
-                        <mat-label>Renter your password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                        <button mat-icon-button matSuffix (click)="hide = !hide"
-                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                        <mat-error *ngIf="registrationForm.hasError('required','password')">
-                            Password is <strong>not matching</strong>
-                        </mat-error>
-                        </mat-form-field>
-                    </p>
+<section id="designBlock" class="background-cu-web-image">
+
+    <style>
+        #designBlock {
+            background-color: hsl(218, 41%, 15%);
+            background-image: url("../assets/images/cu-bg.jpg");
+            background-size: cover;
+            height: 100%;
+            overflow-x: hidden;
+        }
+    </style>
+    <div id="designBlockContent" class="px-4 py-5 px-md-5 text-center text-lg-start my-5">
+        <div id="designBlockContent2" class="row gx-lg-5 align-items-center mb-5 mt-5">
+            <div id="textBlock" class="col-lg-5 mb-5 mb-lg-0 d-none d-lg-block" style="z-index: 10">
+                <h1 id="welcomeHeading" class="display-5 welcome-text fw-bold ls-tight"
+                    style="color: hsl(218, 81%, 95%)">
+                    Welcome! <br />
+                    <span style="color:hsl(0.29deg 100% 40%); text-shadow: 3px 7px black;">Discover, Connect,
+                        Play</span>
+                </h1>
+                <p id="welcomeMessage" class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+
+                </p>
+            </div>
+            <div id="loginBlock" class="col-lg-5 mb-5 mb-lg-0 position-relative">
+                <mat-card id="loginCard" class="login-card card bg-glass">
+                    <mat-card-header id="cardHeader">
+                        <mat-card-title id="cardTitle">
+                            <img id="cupf-logo-red-text" class="logo" src="../assets/images/cupf-logo-red-text.png" />
+                            <br />
+                            <div id="loginFormTitle" class="login-form-title">
+
+                                <span id="sign-in" class="text-muted">Create your account</span>
+                            </div>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content id="cardContent">
+
+                        <form [formGroup]="registrationForm" (ngSubmit)="registration()">
+                            <div class="row">
+                                <mat-form-field class="login-form-field" appearance="outline">
+                                    <mat-label>First Name</mat-label>
+                                    <input matInput placeholder="First Name" formControlName="firstName">
+                                    <mat-icon matSuffix>person</mat-icon>
+                                    <mat-hint></mat-hint>
+                                    <mat-error *ngIf="registrationForm.hasError('noNumbersOrSpecialChars','firstName')">
+                                        Please enter a valid First Name
+                                    </mat-error>
+                                    <mat-error *ngIf="registrationForm.hasError('required','firstName')">
+                                        First Name is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="login-form-field" appearance="outline">
+                                    <mat-label>Last Name</mat-label>
+                                    <input matInput placeholder="Last Name" formControlName="lastName">
+                                    <mat-icon matSuffix>person</mat-icon>
+                                    <mat-hint></mat-hint>
+                                    <mat-error *ngIf="registrationForm.hasError('noNumbersOrSpecialChars','lastName')">
+                                        Please enter a valid Last Name
+                                    </mat-error>
+                                    <mat-error *ngIf="registrationForm.hasError('required','lastName')">
+                                        Last Name is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="login-form-field" appearance="outline">
+                                    <mat-label>Clark ID</mat-label>
+                                    <input matInput placeholder="Clark ID">
+                                    <mat-icon matSuffix>school</mat-icon>
+                                    <mat-hint></mat-hint>
+                                </mat-form-field>
+
+                                <mat-form-field class="login-form-field" appearance="outline">
+                                    <mat-label>Clark mail</mat-label>
+                                    <input matInput placeholder="E-mail">
+                                    <mat-icon matSuffix>mail</mat-icon>
+                                    <mat-hint></mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="login-form-field" appearance="outline">
+                                    <mat-label>Enter your password</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                                    <button mat-icon-button matSuffix (click)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="registrationForm.hasError('required','password')">
+                                        Password is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="login-form-field" appearance="outline">
+                                    <mat-label>Renter your password</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                                    <button mat-icon-button matSuffix (click)="hide = !hide"
+                                        [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="registrationForm.hasError('required','password')">
+                                        Password is <strong>not matching</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="example-chip-list">
+                                    <mat-label>Favorite Sports</mat-label>
+                                    <mat-icon matSuffix>directions_run</mat-icon>
+                                    <mat-chip-grid #chipGrid aria-label="Sport selection">
+                                        <mat-chip-row *ngFor="let sport of sports" (removed)="remove(sport)">
+                                            {{sport}}
+                                            <button matChipRemove [attr.aria-label]="'remove ' + sport">
+                                                <mat-icon>cancel</mat-icon>
+                                            </button>
+                                        </mat-chip-row>
+                                    </mat-chip-grid>
+                                    <input placeholder="Select Sports..." #sportInput [formControl]="sportCtrl"
+                                        [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                        (matChipInputTokenEnd)="add($event)" />
+                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                        <mat-option *ngFor="let sport of filteredSports | async" [value]="sport">
+                                            {{sport}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                            <button mat-raised-button (click)="openDialog('3000ms', '1500ms')"
+                                [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid"
+                                (click)="registration()" mat-raised-button class="register-btn">Register</button>
+                                <p id="registerLink" class="login-action-link " style="color: #393f81;">Already have an account <a routerLink="/login"
+                                    style="color: #393f81;">Login here</a></p>
+                            <!--<button [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid" (click)="registration()" mat-raised-button class="register-btn">Register</button>-->
+                        </form>
                     </mat-card-content>
-                    <div class="mb-3">
-                    <mat-form-field class="example-chip-list">
-                        <mat-label>Favorite Sports</mat-label>
-                        <mat-icon matSuffix>directions_run</mat-icon>
-                        <mat-chip-grid #chipGrid aria-label="Sport selection">
-                          <mat-chip-row *ngFor="let sport of sports" (removed)="remove(sport)">
-                            {{sport}}
-                            <button matChipRemove [attr.aria-label]="'remove ' + sport">
-                            <mat-icon>cancel</mat-icon>
-                            </button>
-                        </mat-chip-row>
-                        </mat-chip-grid>
-                        <input placeholder="New Sport..." #sportInput [formControl]="sportCtrl"
-                        [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        (matChipInputTokenEnd)="add($event)"/>
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                          <mat-option *ngFor="let sport of filteredSports | async" [value]="sport">
-                            {{sport}}
-                        </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                    </div>
-                    <button mat-raised-button (click)="openDialog('3000ms', '1500ms')" [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid" (click)="registration()" mat-raised-button class="register-btn">Register</button>
-                   <!--<button [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid" (click)="registration()" mat-raised-button class="register-btn">Register</button>--> 
-                    </div>
-                </form>
-            </div>
-        
-            <!-- Modal for the success message -->
-            <div *ngIf="showSuccessPopup" class="popup">
-                <div class="popup-content">
-                <p>Registration successful!</p>
-                <button [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid" (click)="redirectToregisterPage()" mat-raised-button class="register-btn">Go to register</button>
-            </div>
+                </mat-card>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-3 d-md-block d-none"></div>
-</div>
-
+</section>
+<!-- Section: Design Block -->
