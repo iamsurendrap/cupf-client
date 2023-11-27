@@ -94,6 +94,7 @@ export class CourtComponent implements OnInit {
     this.generateTimeSlots();
     this.selctedMatchdate = new FormControl(new Date());
     this.minDate =new Date();
+    
   }
 
   //Start - Filter Helpers
