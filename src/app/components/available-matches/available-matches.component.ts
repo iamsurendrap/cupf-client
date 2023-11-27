@@ -1,34 +1,50 @@
-import { Component, OnInit, inject, TemplateRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatchService } from 'src/app/services/match.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-upcoming',
+  selector: 'app-available-matches',
   standalone: true,
   imports: [CommonModule, MatCardModule, MatIconModule, MatDialogModule, MatButtonModule, MatSnackBarModule],
-  templateUrl: './upcoming.component.html',
-  styleUrls: ['./upcoming.component.scss']
+  templateUrl: './available-matches.component.html',
+  styleUrls: ['./available-matches.component.scss']
 })
-export class UpcomingComponent implements OnInit{
+export class AvailableMatchesComponent implements OnInit{
 
-  @ViewChild('dropMatchDialog', { static: true }) dropMatchDialog!: TemplateRef<any>;
+  @ViewChild('joinMatchDialog', { static: true }) joinMatchDialog!: TemplateRef<any>;
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar ){}
-
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
+  
   matchService = inject(MatchService);
   authService = inject(AuthenticationService);
 
-  scheduled: any[] = [];
+  availableMatches: any[] = [];
 
+  ngOnInit(): void {
+    let currentUser = this.authService.getCurrentUser();
+    currentUser = JSON.parse(currentUser);
+    this.matchService.getAllMatches(currentUser._id).subscribe(
+      matches => {
+        this.availableMatches = matches.data.matches;
+        console.log(this.availableMatches)
+      },
+      error => {
+        console.error(error);
+      }
+    );
+    this.matchService.matchChanged.subscribe(()=>{
+      this.ngOnInit();
+    })
+  }
 
-  openDropMatchDialog(match: any): void {
-    const dialogRef = this.dialog.open(this.dropMatchDialog, {
+  openJoinMatchDialog(match: any): void {
+    const dialogRef = this.dialog.open(this.joinMatchDialog, {
       data: { match }, 
       width: '400px', 
     });
@@ -36,7 +52,7 @@ export class UpcomingComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         // User clicked 'Yes', proceed with dropping the match
-        this.dropMatch(match);
+        this.joinMatch(match);
       } else {
         // User clicked 'No' or closed the dialog
         console.log('Dialog closed or No clicked');
@@ -44,7 +60,7 @@ export class UpcomingComponent implements OnInit{
     });
   }
 
-  async dropMatch(match: any): Promise<void> {
+  async joinMatch(match: any): Promise<void> {
     let owner = await this.authService.getCurrentUser();
     owner = JSON.parse(owner);
     console.log(owner);
@@ -52,35 +68,15 @@ export class UpcomingComponent implements OnInit{
       userId: owner._id,
       matchId: match._id
     };
-    this.matchService.dropMatch(matchData).subscribe({
+    this.matchService.joinMatch(matchData).subscribe({
       next: (res) => {
-        console.log('success');
-        this.showSuccessSnackbar('You have successfully dropped from the match!', 'Dismiss', 5000);
-        this.matchService.emitMatchDropped();
+        this.showSuccessSnackbar('You have successfully joined the match!', 'Dismiss', 5000);
+        this.matchService.emitMatchJoined();
       },
       error: (err) => {
         console.log(err.message);
       },
     });
-  }
-
-  ngOnInit(): void {
-    let currentUser = this.authService.getCurrentUser();
-    currentUser = JSON.parse(currentUser);
-    this.matchService.getMatches(currentUser._id).subscribe(
-      matches => {
-        this.scheduled = matches.data.matches;
-        console.log(this.scheduled)
-      },
-      error => {
-        console.error(error);
-      }
-    );
-
-    this.matchService.matchChanged.subscribe(()=>{
-      this.ngOnInit();
-    })
-
   }
 
   showSuccessSnackbar(message: string, action: string, duration: number): void {
@@ -91,5 +87,4 @@ export class UpcomingComponent implements OnInit{
     snackBarRef.afterDismissed().subscribe(() => {
     });
   }
-
 }

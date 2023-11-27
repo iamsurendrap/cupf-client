@@ -26,18 +26,13 @@
     font-weight: 800;
     margin-bottom: 10px;
   }
+
   .info-row{
     min-height: 30px;
   }
 
-  .drop-match-link{
+  .join-match-link{
     color: #6b7aab;
     font-size: 15px;
     cursor: pointer;
   }
-  .disabled {
-    pointer-events: none;
-    color: #dedede;
-    cursor: not-allowed;
-  }
-  
