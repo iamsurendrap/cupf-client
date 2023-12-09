@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit{
 
   hide = true;
   hiddenError = true;
+  hiddenActiveError = true;
 
   login(){
     this.isLoading = true;
@@ -69,6 +70,7 @@ export class LoginComponent implements OnInit{
     .subscribe({
       next:(res)=>{
         this.hiddenError=true;
+        this.hiddenActiveError = true;
         this.authService.setCurrentUser(res.data, res.data._id);
         this.authService.isLoggedIn$.next(true);
         this.loginForm.reset();
@@ -76,7 +78,13 @@ export class LoginComponent implements OnInit{
         this.router.navigate(['home']);
       },
       error:(err)=>{ 
-        this.hiddenError=false;
+        console.log(err);
+        this.isLoading=false;
+        if(err.status == 401)
+          this.hiddenActiveError = false;
+        
+        else  
+          this.hiddenError=false;
       }
     })
   }

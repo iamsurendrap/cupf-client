@@ -64,6 +64,9 @@
                             <mat-error id="password-error" *ngIf="!hiddenError">
                                 The user name or password is incorrect
                             </mat-error>
+                            <mat-error id="password-error-1" *ngIf="!hiddenActiveError">
+                                The user is not active, please verify the account.
+                            </mat-error>
                             <button id="loginButton" [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()" mat-raised-button class="login-btn">Login</button>
                             
                             <a id="forgotPasswordLink" class="login-action-link text-muted" routerLink="/repair">Forgot password?</a>
