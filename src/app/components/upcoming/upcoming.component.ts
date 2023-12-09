@@ -70,6 +70,16 @@ export class UpcomingComponent implements OnInit{
     this.matchService.getMatches(currentUser._id).subscribe(
       matches => {
         this.scheduled = matches.data.matches;
+        // Assuming you have a method to get the current date and time
+        const currentDateTime = new Date();
+
+        // Filter out matches that are past the current date and time
+        this.scheduled = this.scheduled.filter(match => {
+          const matchDateTime = new Date(match.date + ' ' + match.slots[0]); // Assuming slots is an array of strings
+
+          return matchDateTime > currentDateTime;
+        }); 
+        
         console.log(this.scheduled)
       },
       error => {

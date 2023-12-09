@@ -182,17 +182,24 @@ export class CourtComponent implements OnInit {
     this.scheduleMatchSport = event.value;
   }
 
-  selectedSlots: string[] = [];
-  timeSlots: string[] = [];
-  generateTimeSlots(): string[] {
-    this.timeSlots = [];
-    for (let i = 9; i < 21; i++) { // Adjust the loop according to your needs
-      const startTime = this.formatTime(i, 0, true); // Exclude AM/PM for start time
-      //const endTime = this.formatTime(i + 1, 0, true); // Include AM/PM only for end time
+selectedSlots: string[] = [];
+timeSlots: string[] = [];
+
+generateTimeSlots(): string[] {
+  const currentHour = new Date().getHours();
+  const currentMinute = new Date().getMinutes();
+
+  this.timeSlots = [];
+
+  for (let i = 9; i < 21; i++) {
+    if (i > currentHour || (i === currentHour && 0 >= currentMinute)) {
+      const startTime = this.formatTime(i, 0, true);
       this.timeSlots.push(`${startTime}`);
     }
-    return this.timeSlots;
   }
+
+  return this.timeSlots;
+}
 
   formatTime(hour: number, minute: number, includePeriod: boolean = false): string {
     const period = includePeriod ? (hour >= 12 ? 'PM' : 'AM') : '';
