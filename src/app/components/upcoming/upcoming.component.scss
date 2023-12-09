@@ -19,12 +19,22 @@
   }
   .upcoming-container-content{
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
   }
+
+.upcoming-container-content:hover{
+  overflow-y: auto;
+}
   .upcoming-sport{
     font-size: 18px;
     font-weight: 800;
     margin-bottom: 10px;
+  }
+  .u-s{
+    width: 66%;
+  }
+  .u-s-2{
+    width: 33%;
   }
   .info-row{
     min-height: 30px;

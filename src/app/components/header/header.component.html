@@ -6,25 +6,39 @@
 </mat-toolbar>
 
 <mat-toolbar *ngIf="isLoggedIn" class="app-header px-md-5">
-   
    <img aria-label="logo" class="logo" src="../assets/images/cupf-logo-white-text.png" />
+ 
+   <!-- Show on larger screens -->
    <span class="example-spacer"></span>
-   <button mat-button class="user-name" [matMenuTriggerFor]="menu" aria-label="username">
-      <mat-icon>person</mat-icon>
-      <span> {{currentUser.firstName +" " + currentUser.lastName}}</span>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item disabled="">
-         <mat-icon>person</mat-icon>
-         <span routerLink="/login" (click)="logout()">Profile</span>
+   <button mat-button class="user-name d-none d-md-block" [matMenuTriggerFor]="menu" aria-label="username">
+     <mat-icon class="u-icon">person</mat-icon>
+     <span>{{currentUser.firstName + " " + currentUser.lastName}}</span>
+   </button>
+   <mat-menu #menu="matMenu">
+     <button routerLink="/login" (click)="logout()" mat-menu-item>
+       <mat-icon>logout</mat-icon>
+       <span>Logout</span>
+     </button>
+   </mat-menu>
+ 
+   <!-- Show on smaller screens -->
+   <div class="d-block d-md-none">
+     <button mat-icon-button [matMenuTriggerFor]="mobileMenu" class="white-dots" aria-label="More options">
+       <mat-icon>more_vert</mat-icon>
+     </button>
+     <mat-menu #mobileMenu="matMenu">
+      <button mat-button class="user-name-black" [matMenuTriggerFor]="menu" aria-label="username">
+         <mat-icon class="u-icon">person</mat-icon>
+         <span>{{currentUser.firstName + " " + currentUser.lastName}}</span>
        </button>
-
-      <button routerLink="/login" (click)="logout()" mat-menu-item>
+       <button mat-menu-item routerLink="/home">Home</button>
+       <button mat-menu-item routerLink="/upcoming">Upcoming Matches</button>
+       <button mat-menu-item routerLink="/join">Join Matches</button>
+       <button routerLink="/login" (click)="logout()" mat-menu-item>
          <mat-icon>logout</mat-icon>
          <span>Logout</span>
        </button>
-     
-    </mat-menu>
-    
-  
-</mat-toolbar>
+     </mat-menu>
+   </div>
+ </mat-toolbar>
+ 

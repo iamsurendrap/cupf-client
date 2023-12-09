@@ -43,10 +43,10 @@
                                     <input matInput placeholder="First Name" formControlName="firstName">
                                     <mat-icon matSuffix>person</mat-icon>
                                     <mat-hint></mat-hint>
-                                    <mat-error *ngIf="registrationForm.hasError('noNumbersOrSpecialChars','firstName')">
+                                    <mat-error *ngIf="registrationForm.hasError('noNumbersOrSpecialChars','firstName') && !registrationForm.hasError('required','firstName') ">
                                         Please enter a valid First Name
                                     </mat-error>
-                                    <mat-error *ngIf="registrationForm.hasError('required','firstName')">
+                                    <mat-error *ngIf="registrationForm.hasError('required','firstName') ">
                                         First Name is <strong>required</strong>
                                     </mat-error>
                                 </mat-form-field>
@@ -56,7 +56,7 @@
                                     <input matInput placeholder="Last Name" formControlName="lastName">
                                     <mat-icon matSuffix>person</mat-icon>
                                     <mat-hint></mat-hint>
-                                    <mat-error *ngIf="registrationForm.hasError('noNumbersOrSpecialChars','lastName')">
+                                    <mat-error *ngIf="registrationForm.hasError('noNumbersOrSpecialChars','lastName') && !registrationForm.hasError('required','lastName')">
                                         Please enter a valid Last Name
                                     </mat-error>
                                     <mat-error *ngIf="registrationForm.hasError('required','lastName')">
@@ -65,78 +65,80 @@
                                 </mat-form-field>
                             </div>
                             <div class="row">
-                                <mat-form-field class="login-form-field" appearance="outline">
-                                    <mat-label>Clark ID</mat-label>
-                                    <input matInput placeholder="Clark ID">
-                                    <mat-icon matSuffix>school</mat-icon>
-                                    <mat-hint></mat-hint>
-                                </mat-form-field>
-
-                                <mat-form-field class="login-form-field" appearance="outline">
-                                    <mat-label>Clark mail</mat-label>
-                                    <input matInput placeholder="E-mail">
+                                <mat-form-field class="" appearance="outline">
+                                    <mat-label id="email" for="emailInput">Email</mat-label>
+                                    <input id="emailInput" type="email" matInput formControlName="email"
+                                        placeholder="Clark Email">
                                     <mat-icon matSuffix>mail</mat-icon>
-                                    <mat-hint></mat-hint>
+                                    <mat-error id="email-error"
+                                        *ngIf="registrationForm.hasError('email','email')">
+                                        Please enter a valid email address
+                                    </mat-error>
+                                    <mat-error id="email-error-2" *ngIf="registrationForm.hasError('required','email')">
+                                        Email is <strong>required</strong>
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="row">
                                 <mat-form-field class="login-form-field" appearance="outline">
                                     <mat-label>Enter your password</mat-label>
-                                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" [errorStateMatcher]="matcher">
                                     <button mat-icon-button matSuffix (click)="hide = !hide"
                                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                     </button>
-                                    <mat-error *ngIf="registrationForm.hasError('required','password')">
+                                    <mat-error *ngIf="registrationForm.hasError('required','password') && isControlTouched('password')">
                                         Password is <strong>required</strong>
                                     </mat-error>
+                                    <mat-error *ngIf="registrationForm.hasError('minlength','password') && isControlTouched('password')">
+                                        Password <strong>minimum length is 6</strong>
+                                    </mat-error>
                                 </mat-form-field>
+                                <!-- confirm password -->
                                 <mat-form-field class="login-form-field" appearance="outline">
                                     <mat-label>Renter your password</mat-label>
-                                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="cpassword" [errorStateMatcher]="matcher">
                                     <button mat-icon-button matSuffix (click)="hide = !hide"
                                         [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                     </button>
-                                    <mat-error *ngIf="registrationForm.hasError('required','password')">
+                                    <mat-error *ngIf="registrationForm.errors?.['notSame'] && isControlTouched('cpassword')">
                                         Password is <strong>not matching</strong>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="row">
-                                <mat-form-field class="example-chip-list">
-                                    <mat-label>Favorite Sports</mat-label>
-                                    <mat-icon matSuffix>directions_run</mat-icon>
-                                    <mat-chip-grid #chipGrid aria-label="Sport selection">
-                                        <mat-chip-row *ngFor="let sport of sports" (removed)="remove(sport)">
-                                            {{sport}}
-                                            <button matChipRemove [attr.aria-label]="'remove ' + sport">
-                                                <mat-icon>cancel</mat-icon>
-                                            </button>
-                                        </mat-chip-row>
-                                    </mat-chip-grid>
-                                    <input placeholder="Select Sports..." #sportInput [formControl]="sportCtrl"
-                                        [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
-                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                        (matChipInputTokenEnd)="add($event)" />
-                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                                        <mat-option *ngFor="let sport of filteredSports | async" [value]="sport">
-                                            {{sport}}
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                </mat-form-field>
-                            </div>
-                            <button mat-raised-button (click)="openDialog('3000ms', '1500ms')"
-                                [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid"
+                                <mat-form-field>
+                                    <mat-label>Select your favorite sports(at least one)...</mat-label>
+                                    <mat-select formControlName="favorites" multiple>
+                                      <mat-option *ngFor="let sport of sportsList" [value]="sport">{{ sport }}</mat-option>
+                                    </mat-select>
+                                    <!-- Display the error message by default and when 'atLeastOne' condition is met -->
+                                    <mat-error *ngIf="(registrationForm.get('favorites')?.invalid && registrationForm.get('favorites')?.untouched) || registrationForm.hasError('atLeastOne', 'favorites')">
+                                      Please select at least one sport.
+                                    </mat-error>
+                                  </mat-form-field>
+                                  
+                              </div>
+                              
+                            <button mat-raised-button
+                                 [class.disabled]="registrationForm.invalid"
                                 (click)="registration()" mat-raised-button class="register-btn">Register</button>
                                 <p id="registerLink" class="login-action-link " style="color: #393f81;">Already have an account <a routerLink="/login"
                                     style="color: #393f81;">Login here</a></p>
-                            <!--<button [disabled]="registrationForm.invalid" [class.disabled]="registrationForm.invalid" (click)="registration()" mat-raised-button class="register-btn">Register</button>-->
-                        </form>
+                       </form>
                     </mat-card-content>
                 </mat-card>
             </div>
         </div>
     </div>
+    <ng-template #registrationSuccessDialog let-data>
+        <label mat-dialog-title>Success</label>
+        <mat-dialog-content>
+            <label>Registration is success</label>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end"> 
+            <button mat-button color="warn" [mat-dialog-close]="true">Go To Login</button>
+        </mat-dialog-actions>
+      </ng-template>
 </section>
-<!-- Section: Design Block -->

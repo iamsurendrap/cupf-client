@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { apiUrls } from '../api.urls';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,18 @@ export class AuthenticationService {
     return this.http.post<any>(`${apiUrls.authenticationServiceUrl}login`,loginObj,{ withCredentials: true });
   }
   
+  //register
+  register(registerObj:any){
+    return this.http.post<any>(`${apiUrls.authenticationServiceUrl}`,registerObj);
+  }
+
+  //verify
+  verify(token: string): Observable<any> {
+    const url = `${apiUrls.authenticationServiceUrl}verify/${token}`;
+    return this.http.get(url);
+  }
+
+
 //Helper methods
   setCurrentUser(user: any, userid: any) {
     // Store the user information in currentUser

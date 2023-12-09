@@ -74,6 +74,15 @@
                 </mat-card>
             </div>
         </div>
+        <ng-template #verificationSuccessDialog let-data>
+            <label mat-dialog-title>Success</label>
+            <mat-dialog-content>
+                <label>Verification is success, please login using credential</label>
+            </mat-dialog-content>
+            <mat-dialog-actions align="end"> 
+                <button mat-button color="primary" [mat-dialog-close]="true">close</button>
+            </mat-dialog-actions>
+          </ng-template>
     </div>
 </section>
 <!-- Section: Design Block -->

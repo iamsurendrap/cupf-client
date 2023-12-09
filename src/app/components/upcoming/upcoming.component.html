@@ -6,7 +6,7 @@
         <div class="mat-mdc-card-content mb-3" *ngFor="let match of scheduled">
             <mat-card>
                     <div class="row px-2 py-3 mx-0 content-1">
-                        <div class="col-sm-8">
+                        <div class="col-sm-8 u-s">
                             <div class="upcoming-sport">
                                 {{match.sport}}
                             </div>
@@ -14,7 +14,7 @@
                                 {{match.date | date:'MM-dd-yyyy'}} {{match.slots[0]}}
                             </div>
                         </div>
-                        <div class="col-sm-4 text-center">
+                        <div class="col-sm-4 u-s-2 text-center">
                             <div class="upcoming-sport">
                                 {{match.participants.length}}
                             </div>
