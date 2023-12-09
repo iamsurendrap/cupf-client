@@ -21,28 +21,29 @@ import { MatInputModule } from '@angular/material/input';
 import { MatchService } from 'src/app/services/match.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoadingSpinnerComponent } from "../loading-spinner/loading-spinner.component";
 
 @Component({
-  selector: 'app-court',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, 
-    MatDividerModule, MatIconModule, MatRippleModule, MatFormFieldModule,
-    MatInputModule, 
-    FormsModule, MatSnackBarModule,
-    ReactiveFormsModule, MatSelectModule,
-    MatDatepickerModule, MatNativeDateModule, MatDialogModule],
-  animations: [
-    trigger('fade', [
-      transition('* => *', [
-        animate(1100, keyframes([
-          style({opacity: 0, transform: 'translateY(-50%)', offset: 0}),
-          style({opacity: 1, transform: 'translateY(0%)', offset: 1})
-        ]))
-      ])
-    ])
-  ],
-  templateUrl: './court.component.html',
-  styleUrls: ['./court.component.scss']
+    selector: 'app-court',
+    standalone: true,
+    animations: [
+        trigger('fade', [
+            transition('* => *', [
+                animate(1100, keyframes([
+                    style({ opacity: 0, transform: 'translateY(-50%)', offset: 0 }),
+                    style({ opacity: 1, transform: 'translateY(0%)', offset: 1 })
+                ]))
+            ])
+        ])
+    ],
+    templateUrl: './court.component.html',
+    styleUrls: ['./court.component.scss'],
+    imports: [CommonModule, MatCardModule, MatButtonModule,
+        MatDividerModule, MatIconModule, MatRippleModule, MatFormFieldModule,
+        MatInputModule,
+        FormsModule, MatSnackBarModule,
+        ReactiveFormsModule, MatSelectModule,
+        MatDatepickerModule, MatNativeDateModule, MatDialogModule, LoadingSpinnerComponent]
 })
 export class CourtComponent implements OnInit {
 
@@ -58,6 +59,7 @@ export class CourtComponent implements OnInit {
   scheduleMatchCourt: any = null;
   scheduleMatchForm !:FormGroup;
   fb = inject(FormBuilder);
+  isLoading = false;
   
   @ViewChild('modalTemplate',  { static: true }) modalTemplate!: TemplateRef<any>;
 
@@ -67,10 +69,12 @@ export class CourtComponent implements OnInit {
     
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.groundService.getGroundsList().subscribe(
       grounds => {  
         this.courts=[...grounds.data];
         this.toggleSportSelection("All");
+        this.isLoading = false;
       },
       error => {
         console.error(error);

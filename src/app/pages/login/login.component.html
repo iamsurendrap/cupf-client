@@ -10,7 +10,7 @@
             overflow-x: hidden;
         }
     </style>
-    <div id="designBlockContent" class="px-4 py-5 px-md-5 text-center text-lg-start my-5">
+    <div id="designBlockContent" class="px-4 py-5 px-md-5  container-fluid text-center text-lg-start my-5">
         <div id="designBlockContent2" class="row gx-lg-5 align-items-center mb-5 mt-5">
             <div id="textBlock" class="col-lg-7 mb-5 mb-lg-0 d-none d-lg-block" style="z-index: 10">
                 <h1 id="welcomeHeading" class="display-5 welcome-text fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
@@ -83,6 +83,9 @@
                 <button mat-button color="primary" [mat-dialog-close]="true">close</button>
             </mat-dialog-actions>
           </ng-template>
+          <div *ngIf="isLoading">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
     </div>
 </section>
 <!-- Section: Design Block -->

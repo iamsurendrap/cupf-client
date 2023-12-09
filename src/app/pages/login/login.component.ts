@@ -11,23 +11,24 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
 
 /** @title Form field with error messages */
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  standalone: true,
-  imports: [MatFormFieldModule,
-     MatInputModule, 
-     FormsModule, 
-     ReactiveFormsModule, 
-     NgIf,
-     MatIconModule,
-     MatButtonModule,
-     MatCardModule,
-     MatDialogModule,
-    RouterModule],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: true,
+    imports: [MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
+        RouterModule, LoadingSpinnerComponent]
 })
 export class LoginComponent implements OnInit{
 
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit{
   cookie = inject(CookieService);
   router = inject(Router);
   isEmailVerified: boolean = false;
+  isLoading = false;
   @ViewChild('verificationSuccessDialog', { static: true }) successDialog!: TemplateRef<any>;
   constructor(private dialog: MatDialog, private route: ActivatedRoute) {}
 
@@ -62,6 +64,7 @@ export class LoginComponent implements OnInit{
   hiddenError = true;
 
   login(){
+    this.isLoading = true;
     this.authService.loginService(this.loginForm.value)
     .subscribe({
       next:(res)=>{
@@ -69,6 +72,7 @@ export class LoginComponent implements OnInit{
         this.authService.setCurrentUser(res.data, res.data._id);
         this.authService.isLoggedIn$.next(true);
         this.loginForm.reset();
+        this.isLoading=false;
         this.router.navigate(['home']);
       },
       error:(err)=>{ 
