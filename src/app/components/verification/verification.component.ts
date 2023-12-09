@@ -23,14 +23,14 @@ export class VerificationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('hit');
+    //console.log('hit');
     this.route.queryParams.subscribe((params) => {
       const token = this.route.snapshot.params['token'];
-      console.log(token);
+      //console.log(token);
       if (token) {
         this.authService.verify(token).subscribe(
           (res) => {
-            console.log('Email verification successful', res);
+            //console.log('Email verification successful', res);
             this.router.navigate(['/login/true']);
           },
           (error) => {

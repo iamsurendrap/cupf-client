@@ -39,7 +39,7 @@ export class UpcomingComponent implements OnInit{
         this.dropMatch(match);
       } else {
         // User clicked 'No' or closed the dialog
-        console.log('Dialog closed or No clicked');
+        //console.log('Dialog closed or No clicked');
       }
     });
   }
@@ -47,19 +47,19 @@ export class UpcomingComponent implements OnInit{
   async dropMatch(match: any): Promise<void> {
     let owner = await this.authService.getCurrentUser();
     owner = JSON.parse(owner);
-    console.log(owner);
+    //console.log(owner);
     const matchData = {
       userId: owner._id,
       matchId: match._id
     };
     this.matchService.dropMatch(matchData).subscribe({
       next: (res) => {
-        console.log('success');
+        //console.log('success');
         this.showSuccessSnackbar('You have successfully dropped from the match!', 'Dismiss', 5000);
         this.matchService.emitMatchDropped();
       },
       error: (err) => {
-        console.log(err.message);
+        //console.log(err.message);
       },
     });
   }
@@ -79,8 +79,8 @@ export class UpcomingComponent implements OnInit{
 
           return matchDateTime > currentDateTime;
         }); 
-        
-        console.log(this.scheduled)
+
+        //console.log(this.scheduled)
       },
       error => {
         console.error(error);

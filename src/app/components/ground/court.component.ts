@@ -169,7 +169,7 @@ export class CourtComponent implements OnInit {
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
     });
   }
   // Moved
@@ -244,7 +244,7 @@ generateTimeSlots(): string[] {
   async confirmMatch() {
     let owner = await this.authService.getCurrentUser();
     owner = JSON.parse(owner);
-    console.log(owner);
+    //console.log(owner);
     const matchData = {
       owner: owner._id,
       ground: this.scheduleMatchCourt._id,
@@ -255,13 +255,13 @@ generateTimeSlots(): string[] {
 
     this.matchService.createMatch(matchData).subscribe({
       next: (res) => {
-        console.log('Match created successfully');
+        //console.log('Match created successfully');
         this.onCloseClick();
         this.showSuccessSnackbar("You have created a match successfully!", "Dismiss", 5000);
         this.matchService.emitMatchCreated();
       },
       error: (err) => {
-        console.log(err.message);
+        //console.log(err.message);
       },
     });
   }

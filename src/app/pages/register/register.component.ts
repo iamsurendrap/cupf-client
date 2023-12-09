@@ -94,7 +94,7 @@ export class RegisterComponent {
   }
   
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    console.log('Form group:', group.value);
+    //console.log('Form group:', group.value);
     let pass = group.controls['password'].value;
     let confirmPass = group.controls['cpassword'].value;
 
@@ -131,7 +131,7 @@ export class RegisterComponent {
       },
       error:(err)=>{ 
         this.hiddenError=false;
-        console.log(err);
+        //console.log(err);
       }
     })
   }
@@ -149,7 +149,7 @@ export class RegisterComponent {
         
       } else {
         // User clicked 'No' or closed the dialog
-        console.log('Dialog closed or No clicked');
+        //console.log('Dialog closed or No clicked');
       }
     });
   }

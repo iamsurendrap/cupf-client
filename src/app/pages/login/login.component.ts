@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit{
   loginForm !:FormGroup;
   ngOnInit(): void {
 
-    console.log(this.route.snapshot.params['verified']);
+    //console.log(this.route.snapshot.params['verified']);
     this.route.queryParams.subscribe((params) => {
-      console.log(params['verified']);
+      //console.log(params['verified']);
       this.isEmailVerified = this.route.snapshot.params['verified'] === 'true';
       if(this.isEmailVerified)
         this.openSuccessDialog();
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit{
         
       } else {
         // User clicked 'No' or closed the dialog
-        console.log('Dialog closed or No clicked');
+        //console.log('Dialog closed or No clicked');
       }
     });
   }
