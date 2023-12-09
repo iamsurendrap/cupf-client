@@ -68,6 +68,8 @@ export class CourtComponent implements OnInit {
   private dialogRef!: MatDialogRef<any, any>;
     
 
+selctedMatchdate = new FormControl(new Date());
+
   ngOnInit(): void {
     this.isLoading = true;
     this.groundService.getGroundsList().subscribe(
@@ -136,7 +138,6 @@ export class CourtComponent implements OnInit {
     }
   }
 
-
   reorganizeButtons() {
     this.sports.sort((a, b) => {
       if (this.selectedSports.includes(a)) {
@@ -164,6 +165,7 @@ export class CourtComponent implements OnInit {
   scheduleMatchSport: string = ''; 
   scheduleMatch(court:any){
     this.scheduleMatchCourt = court;
+    this.selctedMatchdate.setValue(new Date());
     this.updateDisabledSlots();
     this.scheduleSelectedMatch = this.scheduleMatchCourt.sports
     this.dialogRef = this.dialog.open(this.modalTemplate, {
@@ -190,8 +192,27 @@ selectedSlots: string[] = [];
 timeSlots: string[] = [];
 
 generateTimeSlots(): string[] {
-  const currentHour = new Date().getHours();
-  const currentMinute = new Date().getMinutes();
+
+const selctedDate = this.selctedMatchdate.value as Date;
+  // Get the current date
+const today: Date = new Date();
+ let currentHour = 0;
+ let currentMinute = 0;
+
+// // Compare year, month, and day components
+const isToday: boolean =
+  selctedDate.getFullYear() === today.getFullYear() &&
+  selctedDate.getMonth() === today.getMonth() &&
+  selctedDate.getDate() === today.getDate();
+
+if(isToday){
+   currentHour = new Date().getHours();
+   currentMinute = new Date().getMinutes();
+}
+
+  // currentHour = new Date().getHours();
+  // currentMinute = new Date().getMinutes(); 
+  
 
   this.timeSlots = [];
 
@@ -225,13 +246,13 @@ generateTimeSlots(): string[] {
   }
 
   scheduleSelectedMatch: string = "";
-  selctedMatchdate = new FormControl(new Date());
   minDate =new Date();
 
   disabledSlots: string[] = [];
   onDateChange(){
     this.selectedSlots = [];
     this.updateDisabledSlots();
+    this.generateTimeSlots();
   }
   updateDisabledSlots() {
     const selectedDate = this.selctedMatchdate.value?.toISOString().split('T')[0];
@@ -256,15 +277,17 @@ generateTimeSlots(): string[] {
       slots: this.selectedSlots, // Assume you have a variable to store the selected time slot
       sport: this.scheduleMatchSport, // Assume you have a variable to store the selected sport
     };
-
+    this.isLoading = true;
     this.matchService.createMatch(matchData).subscribe({
       next: (res) => {
         //console.log('Match created successfully');
         this.onCloseClick();
         this.showSuccessSnackbar("You have created a match successfully!", "Dismiss", 5000);
         this.matchService.emitMatchCreated();
+        this.isLoading = false;
       },
       error: (err) => {
+        this.isLoading = false;
         //console.log(err.message);
       },
     });
