@@ -18,14 +18,14 @@ export class MatchService {
 
     getMatches(id:string){
       var res = this.http.get<any>(`${apiUrls.matchServiceUrl}user/${id}`);
-      //console.log(res.data);
+      ////console.log(res.data);
       return res;
     }
 
     
     getAllMatches(id:string){
       var res = this.http.get<any>(`${apiUrls.matchServiceUrl}all/${id}`);
-      //console.log(res.data);
+      ////console.log(res.data);
       return res;
     }
 
@@ -40,7 +40,6 @@ export class MatchService {
     public emitMatchDropped(): void {
       this.matchChanged.emit();
     }
-  
     public emitMatchJoined():void{
       this.matchChanged.emit();
     }

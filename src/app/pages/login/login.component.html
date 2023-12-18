@@ -10,7 +10,7 @@
             overflow-x: hidden;
         }
     </style>
-    <div id="designBlockContent" class="px-4 py-5 px-md-5 text-center text-lg-start my-5">
+    <div id="designBlockContent" class="px-4 py-5 px-md-5  container-fluid text-center text-lg-start my-5">
         <div id="designBlockContent2" class="row gx-lg-5 align-items-center mb-5 mt-5">
             <div id="textBlock" class="col-lg-7 mb-5 mb-lg-0 d-none d-lg-block" style="z-index: 10">
                 <h1 id="welcomeHeading" class="display-5 welcome-text fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
@@ -64,6 +64,9 @@
                             <mat-error id="password-error" *ngIf="!hiddenError">
                                 The user name or password is incorrect
                             </mat-error>
+                            <mat-error id="password-error-1" *ngIf="!hiddenActiveError">
+                                The user is not active, please verify the account.
+                            </mat-error>
                             <button id="loginButton" [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()" mat-raised-button class="login-btn">Login</button>
                             
                             <a id="forgotPasswordLink" class="login-action-link text-muted" routerLink="/repair">Forgot password?</a>
@@ -83,6 +86,9 @@
                 <button mat-button color="primary" [mat-dialog-close]="true">close</button>
             </mat-dialog-actions>
           </ng-template>
+          <div *ngIf="isLoading">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
     </div>
 </section>
 <!-- Section: Design Block -->

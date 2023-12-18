@@ -21,28 +21,29 @@ import { MatInputModule } from '@angular/material/input';
 import { MatchService } from 'src/app/services/match.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoadingSpinnerComponent } from "../loading-spinner/loading-spinner.component";
 
 @Component({
-  selector: 'app-court',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, 
-    MatDividerModule, MatIconModule, MatRippleModule, MatFormFieldModule,
-    MatInputModule, 
-    FormsModule, MatSnackBarModule,
-    ReactiveFormsModule, MatSelectModule,
-    MatDatepickerModule, MatNativeDateModule, MatDialogModule],
-  animations: [
-    trigger('fade', [
-      transition('* => *', [
-        animate(1100, keyframes([
-          style({opacity: 0, transform: 'translateY(-50%)', offset: 0}),
-          style({opacity: 1, transform: 'translateY(0%)', offset: 1})
-        ]))
-      ])
-    ])
-  ],
-  templateUrl: './court.component.html',
-  styleUrls: ['./court.component.scss']
+    selector: 'app-court',
+    standalone: true,
+    animations: [
+        trigger('fade', [
+            transition('* => *', [
+                animate(1100, keyframes([
+                    style({ opacity: 0, transform: 'translateY(-50%)', offset: 0 }),
+                    style({ opacity: 1, transform: 'translateY(0%)', offset: 1 })
+                ]))
+            ])
+        ])
+    ],
+    templateUrl: './court.component.html',
+    styleUrls: ['./court.component.scss'],
+    imports: [CommonModule, MatCardModule, MatButtonModule,
+        MatDividerModule, MatIconModule, MatRippleModule, MatFormFieldModule,
+        MatInputModule,
+        FormsModule, MatSnackBarModule,
+        ReactiveFormsModule, MatSelectModule,
+        MatDatepickerModule, MatNativeDateModule, MatDialogModule, LoadingSpinnerComponent]
 })
 export class CourtComponent implements OnInit {
 
@@ -58,6 +59,7 @@ export class CourtComponent implements OnInit {
   scheduleMatchCourt: any = null;
   scheduleMatchForm !:FormGroup;
   fb = inject(FormBuilder);
+  isLoading = false;
   
   @ViewChild('modalTemplate',  { static: true }) modalTemplate!: TemplateRef<any>;
 
@@ -66,11 +68,15 @@ export class CourtComponent implements OnInit {
   private dialogRef!: MatDialogRef<any, any>;
     
 
+selctedMatchdate = new FormControl(new Date());
+
   ngOnInit(): void {
+    this.isLoading = true;
     this.groundService.getGroundsList().subscribe(
       grounds => {  
         this.courts=[...grounds.data];
         this.toggleSportSelection("All");
+        this.isLoading = false;
       },
       error => {
         console.error(error);
@@ -132,7 +138,6 @@ export class CourtComponent implements OnInit {
     }
   }
 
-
   reorganizeButtons() {
     this.sports.sort((a, b) => {
       if (this.selectedSports.includes(a)) {
@@ -160,6 +165,7 @@ export class CourtComponent implements OnInit {
   scheduleMatchSport: string = ''; 
   scheduleMatch(court:any){
     this.scheduleMatchCourt = court;
+    this.selctedMatchdate.setValue(new Date());
     this.updateDisabledSlots();
     this.scheduleSelectedMatch = this.scheduleMatchCourt.sports
     this.dialogRef = this.dialog.open(this.modalTemplate, {
@@ -169,7 +175,7 @@ export class CourtComponent implements OnInit {
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
     });
   }
   // Moved
@@ -186,8 +192,27 @@ selectedSlots: string[] = [];
 timeSlots: string[] = [];
 
 generateTimeSlots(): string[] {
-  const currentHour = new Date().getHours();
-  const currentMinute = new Date().getMinutes();
+
+const selctedDate = this.selctedMatchdate.value as Date;
+  // Get the current date
+const today: Date = new Date();
+ let currentHour = 0;
+ let currentMinute = 0;
+
+// // Compare year, month, and day components
+const isToday: boolean =
+  selctedDate.getFullYear() === today.getFullYear() &&
+  selctedDate.getMonth() === today.getMonth() &&
+  selctedDate.getDate() === today.getDate();
+
+if(isToday){
+   currentHour = new Date().getHours();
+   currentMinute = new Date().getMinutes();
+}
+
+  // currentHour = new Date().getHours();
+  // currentMinute = new Date().getMinutes(); 
+  
 
   this.timeSlots = [];
 
@@ -221,13 +246,13 @@ generateTimeSlots(): string[] {
   }
 
   scheduleSelectedMatch: string = "";
-  selctedMatchdate = new FormControl(new Date());
   minDate =new Date();
 
   disabledSlots: string[] = [];
   onDateChange(){
     this.selectedSlots = [];
     this.updateDisabledSlots();
+    this.generateTimeSlots();
   }
   updateDisabledSlots() {
     const selectedDate = this.selctedMatchdate.value?.toISOString().split('T')[0];
@@ -244,7 +269,7 @@ generateTimeSlots(): string[] {
   async confirmMatch() {
     let owner = await this.authService.getCurrentUser();
     owner = JSON.parse(owner);
-    console.log(owner);
+    //console.log(owner);
     const matchData = {
       owner: owner._id,
       ground: this.scheduleMatchCourt._id,
@@ -252,16 +277,18 @@ generateTimeSlots(): string[] {
       slots: this.selectedSlots, // Assume you have a variable to store the selected time slot
       sport: this.scheduleMatchSport, // Assume you have a variable to store the selected sport
     };
-
+    this.isLoading = true;
     this.matchService.createMatch(matchData).subscribe({
       next: (res) => {
-        console.log('Match created successfully');
+        //console.log('Match created successfully');
         this.onCloseClick();
         this.showSuccessSnackbar("You have created a match successfully!", "Dismiss", 5000);
         this.matchService.emitMatchCreated();
+        this.isLoading = false;
       },
       error: (err) => {
-        console.log(err.message);
+        this.isLoading = false;
+        //console.log(err.message);
       },
     });
   }

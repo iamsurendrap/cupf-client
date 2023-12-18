@@ -41,7 +41,7 @@ export class AvailableMatchesComponent implements OnInit{
 
           return matchDateTime > currentDateTime;
         }); 
-        console.log(this.availableMatches)
+        ////console.log(this.availableMatches)
       },
       error => {
         console.error(error);
@@ -64,7 +64,7 @@ export class AvailableMatchesComponent implements OnInit{
         this.joinMatch(match);
       } else {
         // User clicked 'No' or closed the dialog
-        console.log('Dialog closed or No clicked');
+        ////console.log('Dialog closed or No clicked');
       }
     });
   }
@@ -72,7 +72,7 @@ export class AvailableMatchesComponent implements OnInit{
   async joinMatch(match: any): Promise<void> {
     let owner = await this.authService.getCurrentUser();
     owner = JSON.parse(owner);
-    console.log(owner);
+    //console.log(owner);
     const matchData = {
       userId: owner._id,
       matchId: match._id
@@ -83,7 +83,7 @@ export class AvailableMatchesComponent implements OnInit{
         this.matchService.emitMatchJoined();
       },
       error: (err) => {
-        console.log(err.message);
+        ////console.log(err.message);
       },
     });
   }

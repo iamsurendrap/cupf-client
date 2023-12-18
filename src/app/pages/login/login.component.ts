@@ -11,23 +11,24 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
 
 /** @title Form field with error messages */
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  standalone: true,
-  imports: [MatFormFieldModule,
-     MatInputModule, 
-     FormsModule, 
-     ReactiveFormsModule, 
-     NgIf,
-     MatIconModule,
-     MatButtonModule,
-     MatCardModule,
-     MatDialogModule,
-    RouterModule],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: true,
+    imports: [MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
+        RouterModule, LoadingSpinnerComponent]
 })
 export class LoginComponent implements OnInit{
 
@@ -36,15 +37,16 @@ export class LoginComponent implements OnInit{
   cookie = inject(CookieService);
   router = inject(Router);
   isEmailVerified: boolean = false;
+  isLoading = false;
   @ViewChild('verificationSuccessDialog', { static: true }) successDialog!: TemplateRef<any>;
   constructor(private dialog: MatDialog, private route: ActivatedRoute) {}
 
   loginForm !:FormGroup;
   ngOnInit(): void {
 
-    console.log(this.route.snapshot.params['verified']);
+    //console.log(this.route.snapshot.params['verified']);
     this.route.queryParams.subscribe((params) => {
-      console.log(params['verified']);
+      //console.log(params['verified']);
       this.isEmailVerified = this.route.snapshot.params['verified'] === 'true';
       if(this.isEmailVerified)
         this.openSuccessDialog();
@@ -60,19 +62,29 @@ export class LoginComponent implements OnInit{
 
   hide = true;
   hiddenError = true;
+  hiddenActiveError = true;
 
   login(){
+    this.isLoading = true;
     this.authService.loginService(this.loginForm.value)
     .subscribe({
       next:(res)=>{
         this.hiddenError=true;
+        this.hiddenActiveError = true;
         this.authService.setCurrentUser(res.data, res.data._id);
         this.authService.isLoggedIn$.next(true);
         this.loginForm.reset();
+        this.isLoading=false;
         this.router.navigate(['home']);
       },
       error:(err)=>{ 
-        this.hiddenError=false;
+        console.log(err);
+        this.isLoading=false;
+        if(err.status == 401)
+          this.hiddenActiveError = false;
+        
+        else  
+          this.hiddenError=false;
       }
     })
   }
@@ -90,7 +102,7 @@ export class LoginComponent implements OnInit{
         
       } else {
         // User clicked 'No' or closed the dialog
-        console.log('Dialog closed or No clicked');
+        //console.log('Dialog closed or No clicked');
       }
     });
   }

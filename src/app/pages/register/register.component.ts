@@ -23,39 +23,41 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { ErrorStateMatcher } from '@angular/material/core';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { LoadingSpinnerComponent } from "../../components/loading-spinner/loading-spinner.component";
 
 
 
 @Component({
-  selector: 'RegisterComponent',
-  standalone: true,
-  imports: [MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgIf,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatChipsModule,
-    NgFor,
-    MatIconModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    AsyncPipe,
-    MatToolbarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    RouterModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatSelectModule
-  ],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+    selector: 'RegisterComponent',
+    standalone: true,
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    imports: [MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatChipsModule,
+        NgFor,
+        MatIconModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        AsyncPipe,
+        MatToolbarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSnackBarModule,
+        RouterModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatSelectModule,
+        LoadingSpinnerComponent]
 })
 
 
@@ -75,6 +77,7 @@ export class RegisterComponent {
   authService = inject(AuthenticationService);
   cookie = inject(CookieService);
   router = inject(Router);
+  isLoading = false;
 
   registrationForm!: FormGroup;
   matcher = new MyErrorStateMatcher();
@@ -94,7 +97,7 @@ export class RegisterComponent {
   }
   
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    console.log('Form group:', group.value);
+    //console.log('Form group:', group.value);
     let pass = group.controls['password'].value;
     let confirmPass = group.controls['cpassword'].value;
 
@@ -119,7 +122,7 @@ export class RegisterComponent {
   hiddenError = true;
 
   registration() {
-    
+    this.isLoading=true;
     if (this.registrationSubscription) {
       this.registrationSubscription.unsubscribe();
     }
@@ -127,11 +130,12 @@ export class RegisterComponent {
     .subscribe({
       next:(res)=>{
         this.hiddenError=true;
+        this.isLoading = false;
         this.openSuccessDialog();
       },
       error:(err)=>{ 
         this.hiddenError=false;
-        console.log(err);
+        //console.log(err);
       }
     })
   }
@@ -149,7 +153,7 @@ export class RegisterComponent {
         
       } else {
         // User clicked 'No' or closed the dialog
-        console.log('Dialog closed or No clicked');
+        //console.log('Dialog closed or No clicked');
       }
     });
   }
