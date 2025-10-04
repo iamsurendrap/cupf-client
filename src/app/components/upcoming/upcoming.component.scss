@@ -1,0 +1,53 @@
+.upcoming-container-card{
+    min-height: 768px;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  .location{
+    display: flex; 
+    align-items: center;
+    position: absolute;
+  }
+  .location .mat-icon{
+    font-size: 18px;
+    color: rgb(44 44 44);
+  }
+
+  .upcoming-container-content .content-1{
+    background-color: rgb(44 44 44);
+    color:white;
+  }
+  .upcoming-container-content{
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+.upcoming-container-content:hover{
+  overflow-y: auto;
+}
+  .upcoming-sport{
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+  .u-s{
+    width: 66%;
+  }
+  .u-s-2{
+    width: 33%;
+  }
+  .info-row{
+    min-height: 30px;
+  }
+
+  .drop-match-link{
+    color: #6b7aab;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .disabled {
+    pointer-events: none;
+    color: #dedede;
+    cursor: not-allowed;
+  }
+  

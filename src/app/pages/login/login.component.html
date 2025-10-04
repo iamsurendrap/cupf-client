@@ -1,8 +1,8 @@
 <!-- Section: Design Block -->
-<section class="background-cu-web-image">
+<section id="designBlock" class="background-cu-web-image">
 
     <style>
-        .background-cu-web-image {
+        #designBlock {
             background-color: hsl(218, 41%, 15%);
             background-image: url("../assets/images/cu-bg.jpg");
             background-size: cover;
@@ -10,133 +10,85 @@
             overflow-x: hidden;
         }
     </style>
-    <div class="px-4 py-5 px-md-5 text-center text-lg-start my-5">
-        <div class="row gx-lg-5 align-items-center mb-5 mt-5">
-            <div class="col-lg-7 mb-5 mb-lg-0 d-none d-lg-block" style="z-index: 10">
-                <h1 class="display-5 welcome-text fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+    <div id="designBlockContent" class="px-4 py-5 px-md-5  container-fluid text-center text-lg-start my-5">
+        <div id="designBlockContent2" class="row gx-lg-5 align-items-center mb-5 mt-5">
+            <div id="textBlock" class="col-lg-7 mb-5 mb-lg-0 d-none d-lg-block" style="z-index: 10">
+                <h1 id="welcomeHeading" class="display-5 welcome-text fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
                     Welcome! <br />
                     <span style="color:hsl(0.29deg 100% 40%); text-shadow: 3px 7px black;">Discover, Connect, Play</span>
                 </h1>
-                <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+                <p id="welcomeMessage" class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
                    
                 </p>
             </div>
 
-            <div class="col-lg-5 mb-5 mb-lg-0 position-relative">
-                <mat-card class="login-card card bg-glass">
-                    <mat-card-header>
+            <div id="loginBlock" class="col-lg-5 mb-5 mb-lg-0 position-relative">
+                <mat-card id="loginCard" class="login-card card bg-glass">
+                    <mat-card-header id="cardHeader">
 
-                        <mat-card-title>
-                            <img class="logo" src="../assets/images/cupf-logo-red-text.png" />
+                        <mat-card-title id="cardTitle">
+                            <img id="cupf-logo-red-text" class="logo" src="../assets/images/cupf-logo-red-text.png" />
                             <br />
-                            <div class="login-form-title">
+                            <div id="loginFormTitle" class="login-form-title">
 
-                                <span class="text-muted">Sign in to your account</span>
+                                <span id="sign-in" class="text-muted">Sign in to your account</span>
                             </div>
                         </mat-card-title>
                     </mat-card-header>
-                    <mat-card-content>
-                        <form [formGroup]="loginForm">
-                            <mat-form-field class="login-form-field" appearance="outline">
-                                <mat-label>Email</mat-label>
-                                <input type="email" matInput formControlName="email"
+                    <mat-card-content id="cardContent">
+                        <form id="login-form" [formGroup]="loginForm">
+                            <mat-form-field id="login-form-field" class="login-form-field" appearance="outline">
+                                <mat-label id="email" for="emailInput">Email</mat-label>
+                                <input id="emailInput" type="email" matInput formControlName="email"
                                     placeholder="Ex. pat@example.com">
-                                <mat-error
+                                <mat-error id="email-error"
                                     *ngIf="loginForm.hasError('email','email')">
                                     Please enter a valid email address
                                 </mat-error>
-                                <mat-error *ngIf="loginForm.hasError('required','email')">
+                                <mat-error id="email-error-2" *ngIf="loginForm.hasError('required','email')">
                                     Email is <strong>required</strong>
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field class="login-form-field" appearance="outline">
-                                <mat-label>Enter your password</mat-label>
-                                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-                                <button mat-icon-button matSuffix (click)="hide = !hide"
+                            <mat-form-field id="login-form-field" class="login-form-field" appearance="outline">
+                                <mat-label id="password_label" for="passwordInput">Enter your password</mat-label>
+                                <input id="passwordInput" matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                                <button id="password-hide" mat-icon-button matSuffix (click)="hide = !hide"
                                     [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
-                                <mat-error *ngIf="loginForm.hasError('required','password')">
+                                <mat-error id="password-required" *ngIf="loginForm.hasError('required','password')">
                                     Password is <strong>required</strong>
                                 </mat-error>
                                 
                             </mat-form-field>
-                            <mat-error *ngIf="!hiddenError">
+                            <mat-error id="password-error" *ngIf="!hiddenError">
                                 The user name or password is incorrect
                             </mat-error>
-                            <button [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()" mat-raised-button class="login-btn">Login</button>
+                            <mat-error id="password-error-1" *ngIf="!hiddenActiveError">
+                                The user is not active, please verify the account.
+                            </mat-error>
+                            <button id="loginButton" [disabled]="loginForm.invalid" [class.disabled]="loginForm.invalid" (click)="login()" mat-raised-button class="login-btn">Login</button>
                             
-                            <a class="login-action-link text-muted" routerLink="/repair">Forgot password?</a>
-                            <p class="login-action-link " style="color: #393f81;">Don't have an account? <a routerLink="/repair"
+                            <a id="forgotPasswordLink" class="login-action-link text-muted" routerLink="/repair">Forgot password?</a>
+                            <p id="registerLink" class="login-action-link " style="color: #393f81;">Don't have an account? <a routerLink="/register"
                                     style="color: #393f81;">Register here</a></p>
                         </form>
                     </mat-card-content>
                 </mat-card>
             </div>
         </div>
+        <ng-template #verificationSuccessDialog let-data>
+            <label mat-dialog-title>Success</label>
+            <mat-dialog-content>
+                <label>Verification is success, please login using credential</label>
+            </mat-dialog-content>
+            <mat-dialog-actions align="end"> 
+                <button mat-button color="primary" [mat-dialog-close]="true">close</button>
+            </mat-dialog-actions>
+          </ng-template>
+          <div *ngIf="isLoading">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
     </div>
 </section>
 <!-- Section: Design Block -->
-
-
-<!-- Another version of login page -->
-
-<!-- <section class="vh-100">
-    <div class="container py-5 h-100">
-        <div class="row d-flex align-items-center justify-content-center h-100">
-            <div class="col-md-8 col-lg-7 col-xl-6 d-none d-lg-block">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                    class="img-fluid" alt="Phone image">
-            </div>
-            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 ">
-                <mat-card class="login-card">
-                    <mat-card-header>
-
-                        <mat-card-title >
-                            <img class="logo" src="../assets/images/cupf-logo-red-text.png" />
-                            <br/>
-                            <div class="login-form-title">
-
-                                <span class="text-muted">Sign in to your account</span>
-                            </div>
-                        </mat-card-title>
-                        
-                        
-                    
-                    </mat-card-header>
-                    <mat-card-content>
-                        <form>
-                            <mat-form-field class="login-form-field" appearance="outline">
-                                <mat-label>Email</mat-label>
-                                <input type="email" matInput [formControl]="emailFormControl"
-                                    placeholder="Ex. pat@example.com">
-                                <mat-error
-                                    *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                                    Please enter a valid email address
-                                </mat-error>
-                                <mat-error *ngIf="emailFormControl.hasError('required')">
-                                    Email is <strong>required</strong>
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field class="login-form-field" appearance="outline">
-                                <mat-label>Enter your password</mat-label>
-                                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl">
-                                <button mat-icon-button matSuffix (click)="hide = !hide"
-                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                </button>
-                                <mat-error *ngIf="emailFormControl.hasError('required')">
-                                    Password is <strong>required</strong>
-                                </mat-error>
-                            </mat-form-field>
-                            <button mat-raised-button class="login-btn">Login</button>
-                            <a class="login-action-link text-muted" href="#!">Forgot password?</a>
-                            <p class="login-action-link " style="color: #393f81;">Don't have an account? <a href="#!"
-                                style="color: #393f81;">Register here</a></p>
-                        </form>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </div>
-    </div>
-</section> -->

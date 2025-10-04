@@ -12,5 +12,5 @@ import { LoginComponent } from './pages/login/login.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'presentation';
+  title = 'playfield';
 }

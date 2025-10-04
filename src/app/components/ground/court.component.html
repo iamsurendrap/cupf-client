@@ -1,0 +1,108 @@
+<div class="ground-container-card">
+    <div class="ground-container-header mat-mdc-card-header">
+        <h2>Schedule a Match</h2>
+    </div>
+    <div class="ground-container-content mat-mdc-card-content">
+        <div class="w-100 sticky mb-4" bis_skin_checked="1">
+            <div class="sports-filter-container">
+                <button mat-raised-button class="filter-button" *ngFor="let sport of sports; let i = index"
+                    [class.btn-primary]="selectedSports.includes(sport)"
+                    (click)="toggleSportSelection(sport); moveButton(i)"
+                    [@fade]="selectedSports.includes(sport) ? 'in' : 'out'">
+                    {{ sport }}
+                </button>
+            </div>
+
+        </div>
+        <ng-container>
+            <div class="row g-2 ground-cards-container ">
+                <!-- <div class="col-lg-3 col-md-6 col-sm-12" data-aos="fade-up" data-aos-delay="100" -->
+                <div class="col-lg-5 col-md-5 col-sm-12" 
+                    *ngFor="let court of filteredItems">
+                    <mat-card class="ground-card">
+                        <mat-card-content class="ground-card-content">
+                            <div class="bg-image hover-overlay image-container">
+                                <img mat-card-image class="cropped-image img-fluid" [src]="court.imageurl"
+                                    alt="Photo of the court">
+                                <div class="card-img-overlay ground-card-img-overlay px-3 py-2">
+                                    <p>
+                                        {{court.name}}
+                                    </p>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                        <div class="ground-card-details">
+                            <div class="info-row p-2">
+                                <div class="sports-container">
+                                    <div class="">
+                                        <span class="sports-name" *ngFor="let sport of court.sports; let i = index">
+                                            {{sport}}{{i=== court.sports.length -1 ? '' : ',&nbsp;'}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-action">
+                                <button type="submit" class="btn submit-btn"
+                                    (click)="scheduleMatch(court)"><span>Schedule a match<i
+                                            class="bi bi-arrow-right"></i></span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </mat-card>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    
+    <ng-template #modalTemplate let-data>
+        <label mat-dialog-title>Enter Details</label>
+        <mat-dialog-content>
+          <form id="schedule-match-form" class="schedule-match-form" [formGroup]="scheduleMatchForm">
+            <div class="court-name">
+              <label>
+                Ground name:
+              </label>
+              {{ scheduleMatchCourt.name }}
+            </div>
+            <mat-form-field class="schedule-form-field">
+              <mat-label>Select the sport</mat-label>
+              <mat-select (selectionChange)="onSportSelectionChange($event)">
+                <mat-option *ngFor="let sport of scheduleMatchCourt.sports" [value]="sport">{{ sport }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="schedule-form-field">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onDateChange()"
+              [formControl]= "selctedMatchdate">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div>
+              <label>
+                Select Time Slot
+              </label>
+              <br />
+              <div class="sports-select-container">
+                <button mat-raised-button class="filter-button" *ngFor="let slot of timeSlots; let i = index"
+                  [class.btn-primary]="isSelected(slot)" (click)="toggleSlot(slot)" [disabled]="isSlotDisabled(slot)">
+                  {{ slot }}
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+          <button mat-button (click)="onCloseClick()">Cancel</button>
+          <button mat-button (click)="confirmMatch()" cdkFocusInitial>Confirm</button>
+        </mat-dialog-actions>
+      </ng-template>
+      
+      <div *ngIf="isLoading">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+
+</div>

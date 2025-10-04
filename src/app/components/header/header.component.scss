@@ -7,7 +7,8 @@
   }
   .app-header{
     height: 5rem ;
-    background-color: rgb(204 1 0);
+    background-color: rgb(44 44 44);
+    
   }
   .logo{
     max-height: 4rem;
@@ -20,4 +21,15 @@
   .clark-logo
   {
     max-width: 4rem;
+  }
+  .white-dots{
+    color: white;
+  }
+
+  .u-icon{
+    vertical-align: text-top !important;
+  }
+
+  .user-name-black{
+    color:black;
   }
